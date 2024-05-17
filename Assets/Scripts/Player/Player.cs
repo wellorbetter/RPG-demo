@@ -15,8 +15,6 @@ public class Player : Entity
     public float jumpForce = 12;
 
     [Header("Dash info")]
-    [SerializeField] private float dashCoolDown;
-    private float dashUsageTimer;
     public float dashSpeed;
     public float dashDuration;
     public float dashDir { get; private set;}
@@ -89,7 +87,6 @@ public class Player : Entity
         // 只需要检查dash里面是否可用即可
         if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill())
         {
-
             // 因为是希望所有的时候都可以冲刺，所以攻击状态也可以冲刺
             // 但是我们希望用冲刺来规避伤害，但是攻击的时候是没有移动的，也就是说这个时候
             // 方向很可能面朝敌人，所以我们需要可以指定这个冲刺的方向，然后默认的话facingDir

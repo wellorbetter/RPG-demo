@@ -4,23 +4,18 @@ using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
-    [SerializeField] protected float cooldown;
-    protected float cooldownTimer;
+    
 
     protected virtual void Update()
     {
-        cooldownTimer -= Time.deltaTime;
+        
     }
 
     public virtual bool CanUseSkill()
     {
-        if (cooldown < 0)
-        {
-            UseSkill();
-            cooldownTimer = cooldown;
-            return true;
-        }
-        return false; 
+        // 这种判断一直都是判断Timer的，而不是cooldown
+        // 之前这里写成了cooldown < 0，谨记切勿再犯
+        return true;
     }
 
     public virtual void UseSkill()
