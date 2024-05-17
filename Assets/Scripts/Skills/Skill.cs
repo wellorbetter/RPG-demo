@@ -6,7 +6,11 @@ public class Skill : MonoBehaviour
 {
     protected float skillTimer; // 各种技能的计时器
     [SerializeField] protected float cooldown;  // 技能的冷却时间
-
+    protected Player player;
+    protected virtual void Start()
+    {
+        player = PlayerManager.instance.player;
+    }
     protected virtual void Update()
     {
         skillTimer -= Time.deltaTime;
