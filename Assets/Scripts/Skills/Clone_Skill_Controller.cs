@@ -4,15 +4,19 @@ using UnityEngine;
 public class Clone_Skill_Controller : MonoBehaviour
 {
     private SpriteRenderer sr;
+    private Animator anim;
     // 失去透明度的速度
     [SerializeField] private float colorLosingSpeed;
     // 在这个时间之后，clone就会逐渐消失
     // 也就是duration，持续时间
     private float cloneTimer;
+    [SerializeField] private Transform attackCheck;
+    [SerializeField] private float attackCheckRadius = .8f;
 
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     private void Update()
@@ -28,9 +32,33 @@ public class Clone_Skill_Controller : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void SetupClone(Transform _clonePosition, float _cloneDuration)
+    public void SetupClone(Transform _clonePosition, float _cloneDuration, bool _canAttack)
     {
+        if (_canAttack)
+        {
+            anim.SetInteger("AttackNumber", Random.Range(1, 4));
+        }
         transform.position = _clonePosition.position;
         cloneTimer = _cloneDuration;
+    }
+
+    private void AnimationTrigger()
+    {
+        cloneTimer = -1f;
+    }
+    private void AttackTrigger()
+    {
+        //Physics2D.OverlapCircleAll 会
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(attackCheck.position, attackCheckRadius);
+        foreach (var hit in colliders)
+        {
+            // 检查碰撞体是否有Enemy组件
+            Enemy enemy = hit.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                // 对敌人造成伤害
+                enemy.Damage();
+            }
+        }
     }
 }

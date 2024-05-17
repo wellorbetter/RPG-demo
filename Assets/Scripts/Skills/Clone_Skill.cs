@@ -9,6 +9,9 @@ public class Clone_Skill : Skill
     [SerializeField] private GameObject clonePrefab;
     // 复制物体的持续时间，过了就会开始消失
     [SerializeField] private float cloneDuration;
+    // 在技能书上解锁，这里测试
+    [Space]
+    [SerializeField] private bool canAttack;
 
     public void CreateClone(Transform _clonePosition)
     {
@@ -17,7 +20,7 @@ public class Clone_Skill : Skill
         // 懂了，第二个参数是父物体的位置，第三个参数是是否保持世界坐标
         // 这个还真不能用Transform
         GameObject newClone = Instantiate(clonePrefab);
-        newClone.GetComponent<Clone_Skill_Controller>().SetupClone(_clonePosition, cloneDuration);
+        newClone.GetComponent<Clone_Skill_Controller>().SetupClone(_clonePosition, cloneDuration, canAttack);
         // 感觉没必要用Controller，直接在这里设置位置就行了
         /*newClone.transform.position = _clonePosition.position;*/
         // 还真有必要，每次都会new一个新的clone，那么这些clone怎么控制
