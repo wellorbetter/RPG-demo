@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
-    
+    protected float skillTimer;
 
-    protected virtual void Update()
+    protected void Update()
     {
-        
+        skillTimer -= Time.deltaTime;
     }
 
     public virtual bool CanUseSkill()
