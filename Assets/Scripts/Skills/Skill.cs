@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Skill : MonoBehaviour
 {
-    protected float skillTimer;
+    protected float skillTimer; // 各种技能的计时器
+    [SerializeField] protected float cooldown;  // 技能的冷却时间
 
-    protected void Update()
+    protected virtual void Update()
     {
         skillTimer -= Time.deltaTime;
     }

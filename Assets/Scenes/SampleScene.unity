@@ -4160,6 +4160,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cooldown: 0
   clonePrefab: {fileID: 2874972083993411735, guid: 8c6c38077c8a4ae40ba2b90ee1e2f971, type: 3}
+  cloneDuration: 1.5
 --- !u!114 &1368348420
 MonoBehaviour:
   m_ObjectHideFlags: 0
