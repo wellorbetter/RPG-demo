@@ -12,6 +12,7 @@ public class Clone_Skill_Controller : MonoBehaviour
     private float cloneTimer;
     [SerializeField] private Transform attackCheck;
     [SerializeField] private float attackCheckRadius = .8f;
+    private Transform closestEnemy;
 
     private void Awake()
     {
@@ -40,6 +41,7 @@ public class Clone_Skill_Controller : MonoBehaviour
         }
         transform.position = _clonePosition.position;
         cloneTimer = _cloneDuration;
+        FaceClosestTarget();
     }
 
     private void AnimationTrigger()
@@ -58,6 +60,37 @@ public class Clone_Skill_Controller : MonoBehaviour
             {
                 // 对敌人造成伤害
                 enemy.Damage();
+            }
+        }
+    }
+
+    // 留在原地的人物 因为精灵图贴图的原因，所以这里的人物是固定朝向右边的
+    // 实际上我们希望它可以朝向最近的敌人
+    // 就只需要判断当它在敌人右边的时候，我们把它掉一个头就可以了
+    private void FaceClosestTarget()
+    {
+        // 这里随便一个很大的值都可以 
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 25);
+        float closestDistance = Mathf.Infinity;
+        foreach(var hit in colliders)
+        {
+            if (hit.GetComponent<Enemy>() != null)
+            {
+                float distanceToEnemy = Vector2.Distance(transform.position, hit.transform.position);
+                if (distanceToEnemy < closestDistance)
+                {
+                    closestDistance = distanceToEnemy;
+                    // 找到最近的物体的坐标
+                    closestEnemy = hit.transform;
+                }
+            }
+        }
+        // 如果找到了最近的敌人
+        if (closestEnemy != null)
+        {
+            if (transform.position.x > closestEnemy.position.x)
+            {
+                transform.Rotate(0, 180, 0);
             }
         }
     }
