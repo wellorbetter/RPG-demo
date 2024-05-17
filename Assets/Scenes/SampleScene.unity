@@ -4098,7 +4098,6 @@ GameObject:
   - component: {fileID: 1368348416}
   - component: {fileID: 1368348418}
   - component: {fileID: 1368348419}
-  - component: {fileID: 1368348420}
   m_Layer: 0
   m_Name: SkillManager
   m_TagString: Untagged
@@ -4161,18 +4160,6 @@ MonoBehaviour:
   cooldown: 0
   clonePrefab: {fileID: 2874972083993411735, guid: 8c6c38077c8a4ae40ba2b90ee1e2f971, type: 3}
   cloneDuration: 1.5
---- !u!114 &1368348420
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1368348415}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bfdceda9d9fa004e871a710991a0327, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1435355734
 GameObject:
   m_ObjectHideFlags: 3
