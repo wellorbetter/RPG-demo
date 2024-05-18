@@ -42,12 +42,14 @@ public class Sword_Skill : Skill
             }
         }
     }
+    // 投掷剑动画中某一帧会触发创建剑，然后给一个速度飞出去
     public void CreateSword()
     {
         // 生成剑 记得好好查一查这个Instantiate
         GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
         Sword_Skill_Controller swordController = newSword.GetComponent<Sword_Skill_Controller>();
         swordController.SetupSword(finalDir, swordGravity);
+        player.AssignNewSword(newSword);
         DotsActive(false);
     }
 
@@ -80,6 +82,7 @@ public class Sword_Skill : Skill
             // Instantiate 方法用于在场景中生成一个新的对象。
             // 第一个参数是要生成的对象，第二个参数是生成对象的位置，第三个参数是生成对象的旋转角度，第四个参数是生成对象的父对象。
             // Quaternion.identity 表示没有旋转，即生成对象的旋转角度为 0。
+            // 这里的dotsParent是一个空的GameObject，用于存放 AimDots。暂时没看出来有啥用
             dots[i] = Instantiate(dotPrefab, player.transform.position, Quaternion.identity, dostsParent);
             dots[i].SetActive(false);
         }

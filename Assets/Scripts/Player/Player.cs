@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class Player : Entity
@@ -18,6 +19,8 @@ public class Player : Entity
     public float dashSpeed;
     public float dashDuration;
     public float dashDir { get; private set;}
+    public SkillManager skill { get; private set; }
+    public GameObject sword { get; private set; }
 
     #region States
     public PlayerStateMachine stateMachine { get; private set; }
@@ -60,6 +63,7 @@ public class Player : Entity
     protected override void Start()
     {
         base.Start();
+        skill = SkillManager.instance;
         stateMachine.Initialize(idleState);
     }
 
@@ -89,7 +93,8 @@ public class Player : Entity
         // 之前的每秒减少的逻辑是写在player里面的
         // 现在写在了SkillManager管理的Dash_Skill实例dash里面
         // 只需要检查dash里面是否可用即可
-        if (Input.GetKeyDown(KeyCode.LeftShift) && SkillManager.instance.dash.CanUseSkill())
+        
+        if (Input.GetKeyDown(KeyCode.LeftShift) && skill.dash.CanUseSkill())
         {
             // 因为是希望所有的时候都可以冲刺，所以攻击状态也可以冲刺
             // 但是我们希望用冲刺来规避伤害，但是攻击的时候是没有移动的，也就是说这个时候
@@ -99,7 +104,18 @@ public class Player : Entity
             stateMachine.ChangeState(dashState);
         }
     }
-    
-    
-    
+
+    //  给剑赋值的函数，剑的生成实际上是在Sword_Skill的CreateSword里面生成的
+    // 因为丢剑毕竟是技能，需要用某些参数来控制剑，所以同时也会有个控制剑的脚本Controller
+    // 但是因为剑实际上只有一个，这里控制器可有可无，不过解耦也还好
+    public void AssignNewSword(GameObject _newSword)
+    {
+        sword = _newSword;
+    }
+
+    // 回收剑的实际函数 因为剑是在Player这里生成的，所以回收也应该在这里
+    public void ClearTheSword()
+    {
+        Destroy(sword);
+    }
 }

@@ -2433,7 +2433,7 @@ MonoBehaviour:
   wallCheckDistance: 0.18
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   attackMovement:
   - {x: 3, y: 1.5}
   - {x: 1, y: 2.5}
@@ -3915,7 +3915,7 @@ MonoBehaviour:
   wallCheckDistance: 0.8
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 8
   stunDuration: 1
   stunDirection: {x: 12, y: 5}
   counterImage: {fileID: 1268995545}
@@ -5158,6 +5158,10 @@ PrefabInstance:
     - target: {fileID: 1988652266995858391, guid: 6658fc2fae784a948bf1d43ac9169a35, type: 3}
       propertyPath: m_Name
       value: AimDot
+      objectReference: {fileID: 0}
+    - target: {fileID: 1988652266995858391, guid: 6658fc2fae784a948bf1d43ac9169a35, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7308489147302479216, guid: 6658fc2fae784a948bf1d43ac9169a35, type: 3}
       propertyPath: m_LocalPosition.x
