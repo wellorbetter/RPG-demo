@@ -3921,7 +3921,7 @@ MonoBehaviour:
   counterImage: {fileID: 1268995545}
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 64
   moveSpeed: 3
   IdleTime: 2
   battleTime: 4

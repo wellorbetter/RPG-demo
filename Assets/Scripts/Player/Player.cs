@@ -114,8 +114,10 @@ public class Player : Entity
     }
 
     // 回收剑的实际函数 因为剑是在Player这里生成的，所以回收也应该在这里
-    public void ClearTheSword()
+    // 修改了，这里应当是接剑状态，然后接到剑当然会消除这把剑
+    public void CatchTheSword()
     {
+        stateMachine.ChangeState(catchSwordState);
         Destroy(sword);
     }
 }

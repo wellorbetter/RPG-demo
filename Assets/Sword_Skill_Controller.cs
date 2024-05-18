@@ -59,7 +59,7 @@ public class Sword_Skill_Controller : MonoBehaviour
             // 通过transform回收剑，如果距离比较近了，就回收剑
             if (Vector2.Distance(transform.position, player.transform.position) < 1)
             {
-                player.ClearTheSword();
+                player.CatchTheSword();
             }
         }
     }
