@@ -27,5 +27,17 @@ public class PlayerAimSwordState : PlayerState
         {
             stateMachine.ChangeState(player.idleState);
         }
+
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        // 如果当前的鼠标在人的右边，并且人物没有朝向右边 翻转
+        if (player.transform.position.x < mousePosition.x && player.facingDir != 1)
+        {
+            player.Flip();
+        }
+        // 鼠标在左边，人没有朝向左边
+        else if (player.transform.position.x > mousePosition.x && player.facingDir != -1)
+        {
+            player.Flip();
+        }
     }
 }

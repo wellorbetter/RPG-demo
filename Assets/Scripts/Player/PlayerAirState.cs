@@ -41,6 +41,6 @@ public class PlayerAirState : PlayerState
         {
             // 这里有问题/？？
             player.SetVelocity(player.moveSpeed * .8f * xInput, rb.velocity.y);
-        }    
+        }  
     }
 }
