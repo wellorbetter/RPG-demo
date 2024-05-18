@@ -13,3 +13,7 @@ https://www.udemy.com/course/2d-rpg-alexdev/
 2024/5/17
 
 P61 -> P67
+
+2024/5/18
+
+p68 -> p73
