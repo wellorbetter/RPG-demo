@@ -57,7 +57,7 @@ public class Sword_Skill_Controller : MonoBehaviour
     }
 
     // 强制对象的右方向与其速度方向对齐。这意味着无论对象向哪个方向移动，它都会自动面朝该方向
-    private void Update()
+    private void FixedUpdate()
     {
         if (canRotate)
         {
@@ -69,7 +69,8 @@ public class Sword_Skill_Controller : MonoBehaviour
             // MoveTowards 会使物体向目标移动，直到它到达目标位置
             // 参数：当前位置，目标位置，移动速度
             // Time.deltaTime 是每帧的时间间隔
-            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, returnSpeed * Time.deltaTime);
+            // 这里改了，因为用Update莫名其妙的卡一卡的，这里应当是没有什么计算的
+            transform.position = Vector2.MoveTowards(transform.position, player.transform.position, returnSpeed * Time.fixedDeltaTime);
             // 通过transform回收剑，如果距离比较近了，就回收剑
             if (Vector2.Distance(transform.position, player.transform.position) < 1)
             {
