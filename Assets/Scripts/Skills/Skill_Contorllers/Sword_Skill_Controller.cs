@@ -35,7 +35,10 @@ public class Sword_Skill_Controller : MonoBehaviour
     // 直接让剑通过transform的方式回到玩家手中
     public void ReturnSword()
     {
-        rb.isKinematic = false;
+        // RigidbodyConstraints2D.FreezeAll 
+        // 这里感觉效果一样
+        rb.constraints = RigidbodyConstraints2D.FreezeAll;
+        //rb.isKinematic = true; // 这里只要触发回收了，就不要受gravity影响了
         // transform.parent设置为null，就会脱离父对象，成为独立的对象
         transform.parent = null;
         // 正在返回
@@ -67,6 +70,9 @@ public class Sword_Skill_Controller : MonoBehaviour
     // 被卡住了就不旋转了
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        // 如果正在回收的时候，就暂时先不管下面的了
+        if (isReturning)
+            return;
         anim.SetBool("Rotation", false);
         canRotate = false;
         cd.enabled = false;
