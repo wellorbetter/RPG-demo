@@ -12,6 +12,9 @@ public class PlayerCatchSwordState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        // 同理，接剑的时候可能也是具有某个速度的
+        // 这里设置为0
+        player.SetZeroVelocity();
         sword = player.sword.transform;
 
         // 和瞄准的时候差不多，收回的时候也会修改人物朝向

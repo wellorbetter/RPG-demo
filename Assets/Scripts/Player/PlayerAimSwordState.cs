@@ -13,6 +13,8 @@ public class PlayerAimSwordState : PlayerState
         base.Enter();
         // player.skill.sword好像不行
         SkillManager.instance.sword.DotsActive(true);
+        // 同样可能会触发滑步的问题，这里需要静止
+        player.SetZeroVelocity();
     }
 
     public override void Exit()
