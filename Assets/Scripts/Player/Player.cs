@@ -14,6 +14,7 @@ public class Player : Entity
     [Header("Move info")]
     public float moveSpeed = 12;
     public float jumpForce = 12;
+    public float swordReturnImpact;
 
     [Header("Dash info")]
     public float dashSpeed;
