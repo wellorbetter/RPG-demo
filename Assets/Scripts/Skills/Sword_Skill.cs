@@ -1,9 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+public enum SwordType
+{
+    Regular,
+    Bounce,
+    Pierce,
+    Spin
+}
 public class Sword_Skill : Skill
 {
+    public SwordType swordType = SwordType.Regular;
+
+    [Header("Bounce Info")]
+    [SerializeField] private int amountOfBounce;
+    [SerializeField] private float bounceGravity;
+
     [Header("Skill Info")]
     [SerializeField] private GameObject swordPrefab;
     [SerializeField] private Vector2 launchForce;
@@ -46,13 +57,21 @@ public class Sword_Skill : Skill
     public void CreateSword()
     {
         // 生成剑 记得好好查一查这个Instantiate
+        // 从当前Player位置生成一个新的剑，这里的transform.rotation没意义，是为了调用这个函数，这个rotation是0 0 0 1
         GameObject newSword = Instantiate(swordPrefab, player.transform.position, transform.rotation);
         Sword_Skill_Controller swordController = newSword.GetComponent<Sword_Skill_Controller>();
+        
+        if (swordType == SwordType.Bounce)
+        {
+            swordGravity = bounceGravity;
+            swordController.SetupBounce(true, amountOfBounce);
+        }
+        
         swordController.SetupSword(finalDir, swordGravity);
         player.AssignNewSword(newSword);
         DotsActive(false);
     }
-
+    #region Aim region
     // 够根据鼠标指针的位置瞄准射击方向
     public Vector2 AimDirection()
     {   // Camera.main 是主相机，ScreenToWorldPoint 方法将屏幕坐标转换为世界坐标。屏幕坐标是基于屏幕分辨率的像素位置，世界坐标是基于游戏世界的单位位置。
@@ -67,7 +86,7 @@ public class Sword_Skill : Skill
     // 设置开关函数
     public void DotsActive(bool _isActive)
     {
-        for (int i = 0; i < dots.Length; i ++ )
+        for (int i = 0; i < dots.Length; i++)
         {
             dots[i].SetActive(_isActive);
         }
@@ -91,9 +110,10 @@ public class Sword_Skill : Skill
     private Vector2 DotsPosition(float t)
     {
         // 位置 = 玩家位置 + 射击方向 * 射击力 * t + 0.5 * 重力 * t * t 也就是算抛物线的公式 vt + 1 / 2 gt^2
-        Vector2 position = (Vector2) player.transform.position + new Vector2(
-            AimDirection().normalized.x * launchForce.x, 
+        Vector2 position = (Vector2)player.transform.position + new Vector2(
+            AimDirection().normalized.x * launchForce.x,
             AimDirection().normalized.y * launchForce.y) * t + 0.5f * (Physics2D.gravity * swordGravity) * t * t;
         return position;
     }
+    #endregion
 }
