@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public enum SwordType
@@ -12,8 +13,13 @@ public class Sword_Skill : Skill
     public SwordType swordType = SwordType.Regular;
 
     [Header("Bounce Info")]
-    [SerializeField] private int amountOfBounce;
+    [SerializeField] private int bounceAmount;
     [SerializeField] private float bounceGravity;
+
+    [Header("Pierce Info")]
+    [SerializeField] private int pierceAmount;
+    [SerializeField] private float pierceGravity;
+
 
     [Header("Skill Info")]
     [SerializeField] private GameObject swordPrefab;
@@ -34,7 +40,21 @@ public class Sword_Skill : Skill
     {
         base.Start();
         GenerateDots();
+        SetupGravity();
     }
+
+    private void SetupGravity()
+    {
+        if (swordType == SwordType.Bounce)
+        {
+            swordGravity = bounceGravity;
+        }
+        else if (swordType == SwordType.Pierce)
+        {
+            swordGravity = pierceGravity;
+        }
+    }
+
     protected override void Update()
     {
         if (Input.GetKeyUp(KeyCode.Mouse1))
@@ -63,8 +83,10 @@ public class Sword_Skill : Skill
         
         if (swordType == SwordType.Bounce)
         {
-            swordGravity = bounceGravity;
-            swordController.SetupBounce(true, amountOfBounce);
+            swordController.SetupBounce(true, bounceAmount);
+        } else if(swordType == SwordType.Pierce)
+        {
+            swordController.SetupPierce(pierceAmount);
         }
         
         swordController.SetupSword(finalDir, swordGravity);

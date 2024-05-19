@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,10 +20,13 @@ public class Sword_Skill_Controller : MonoBehaviour
     // 是否可以来回弹
     private bool isBouncing;
     // 有几次弹的机会
-    private int amoutOfBounce;
+    private int bounceAmount;
     // 第一次击中之后，周围的敌人
     private List<Transform> enemyTarget;
     private int targetIndex;
+
+    [Header("Pierce Info")]
+    private int pierceAmount;
 
     // 这里不能用start,rb在start里面获取不到，更新之后就是这样，有空研究研究
     private void Awake()
@@ -38,7 +42,12 @@ public class Sword_Skill_Controller : MonoBehaviour
         rb.velocity = _dir;
         rb.gravityScale = _gravityScale;
         // 创建剑的时候，让剑旋转
-        anim.SetBool("Rotation", true);
+        // 如果是穿刺的话，就不旋转
+        // 那不是穿刺 pierceAmount <= 0
+        if (pierceAmount <= 0)
+        {
+            anim.SetBool("Rotation", true);
+        }
         enemyTarget = new List<Transform>();
     }
 
@@ -98,9 +107,9 @@ public class Sword_Skill_Controller : MonoBehaviour
             {
                 // 弹下一个
                 targetIndex++;
-                amoutOfBounce--;
+                bounceAmount--;
                 // 没法弹了就回来
-                if (amoutOfBounce == 0)
+                if (bounceAmount == 0)
                 {
                     isBouncing = false;
                     isReturning = true;
@@ -122,6 +131,8 @@ public class Sword_Skill_Controller : MonoBehaviour
             return;
         // 同时，只要没有可以弹的敌人，那就不会弹，只会卡住
 
+        collision.GetComponent<Enemy>()?.Damage();
+
         // collision 是碰撞到的对象 如果它有Enemy组件，就说明是敌人
         if (collision.GetComponent<Enemy>() != null)
         {
@@ -136,6 +147,7 @@ public class Sword_Skill_Controller : MonoBehaviour
                     }
                 }
             }
+            
         }
 
         StuckInto(collision);
@@ -144,6 +156,13 @@ public class Sword_Skill_Controller : MonoBehaviour
     // 和某个物体碰撞的时候，就把剑固定在那个物体上
     private void StuckInto(Collider2D collision)
     {
+        // 穿刺的是敌人，接着穿刺
+        if (pierceAmount > 0 && collision.GetComponent<Enemy>() != null)
+        {
+            // 如果是穿刺的话，每次穿刺都会减少一次穿刺的机会
+            pierceAmount--;
+            return;
+        }
         canRotate = false;
         cd.enabled = false;
         rb.isKinematic = true;
@@ -157,9 +176,14 @@ public class Sword_Skill_Controller : MonoBehaviour
         transform.parent = collision.transform;
     }
 
-    public void SetupBounce(bool _isBouncing, int _amountOfBounce)
+    public void SetupBounce(bool _isBouncing, int _bounceAmount)
     {
         isBouncing = _isBouncing;
-        amoutOfBounce = _amountOfBounce;
+        bounceAmount = _bounceAmount;
+    }
+
+    internal void SetupPierce(int _pierceAmount)
+    {
+        pierceAmount = _pierceAmount;
     }
 }
