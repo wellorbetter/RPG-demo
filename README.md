@@ -30,3 +30,9 @@ p68 -> p73
 
 哪天开个坑用opengl渲染骨骼动画，用opengl做一个无尽跑酷游戏
 
+很久没写了，上传两张图片，等小米训练营结束了再写
+
+![](https://github.com/wellorbetter/picx-images-hosting/raw/master/image.2h85emp9l6.webp)
+![](https://github.com/wellorbetter/picx-images-hosting/raw/master/image.7p4v53gty.webp)
+![](https://github.com/wellorbetter/picx-images-hosting/raw/master/image.8dwpln4if0.webp)
+![](https://github.com/wellorbetter/picx-images-hosting/raw/master/image.3yeagdp2yc.webp)
